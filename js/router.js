@@ -1,4 +1,4 @@
-define(function(){
+define(["jquery", "hashchange"], function($, hashchange){
  
     var routes = [{hash:'#list', controller:'listController'},
                   {hash:'#add',  controller:'addController'}];
