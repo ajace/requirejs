@@ -9,7 +9,7 @@ requirejs.config({
 		'hashchange': 'vendors/jquery.ba-hashchange'
 	},
 	shim: {
-		'hashchange': ['jquery']
+		'hashchange': ['jquery']  						// since there's only one, don't need to explicitly state dep:
 	}
 });
 

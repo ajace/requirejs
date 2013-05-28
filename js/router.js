@@ -1,34 +1,40 @@
-define(["jquery", "hashchange"], function($, hashchange){
+define(['jquery', 'hashchange', 'controllers/listController', 'controllers/addController'], 
+    function($, hashchange, listController, addController){  
  
-    var routes = [{hash:'#list', controller:'listController'},
-                  {hash:'#add',  controller:'addController'}];
-    var defaultRoute = '#list';
-    var currentHash = '';
-     
-    function startRouting(){
-        window.location.hash = window.location.hash || defaultRoute;
-        setInterval(hashCheck, 100);
-    }
+        var routes = [{hash:'#list', controller:'listController'},
+                      {hash:'#add',  controller:'addController'}];
+        var defaultRoute = '#list';
+        var currentHash = '';
 
-    // replace with hashchange
-    // very simple manual monitoring of hashchange event
-    function hashCheck(){
-        if (window.location.hash != currentHash){
-            for (var i = 0, currentRoute; currentRoute = routes[i++];){
-                if (window.location.hash == currentRoute.hash)
-                    loadController(currentRoute.controller);
-            }
-            currentHash = window.location.hash;
+        function startRouting(){
+            $(window).hashchange( function(){
+                window.location.hash = location.hash || defaultRoute;
+                console.log(window.location.hash);
+            });   
+            $(window).hashchange();
+            setInterval(hashCheck, 100);
         }
-    }
-     
-    function loadController(controllerName){
-        require(['controllers/' + controllerName], function(controller){
-            controller.start();
-        });
-    }
-        
-    return {
-        startRouting:startRouting
-    };
+
+        function hashCheck(){
+            if (window.location.hash != currentHash){
+                for (var i = 0, currentRoute; currentRoute = routes[i++];){
+                    if (window.location.hash == currentRoute.hash)
+                        loadController(currentRoute.controller);
+                }
+                currentHash = window.location.hash;
+            }
+        }
+         
+        function loadController(controllerName){
+
+            if (controllerName === 'addController') {
+                addController.start();
+            } else { 
+                listController.start(); 
+            }  
+        }
+            
+        return {
+            startRouting:startRouting      // name of public method : name of method inside this function
+        };
 });

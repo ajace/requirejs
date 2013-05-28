@@ -22,6 +22,7 @@ define(['views/addView', 'models/user'], function(AddView, User){
     }
  
     return {
-        start:start
+        // start: bindEvents        // start is the name of the public function, 2nd argument is the function called
+        start: start                             
     };
 });
